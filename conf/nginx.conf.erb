@@ -69,7 +69,7 @@ http {
 
 # Rewrite rule adapted for Zend Framework
 location / {
-    index index.php;
+    
     if (!-f $request_filename) {
         rewrite ^(.*)$ /index.php last;
     }
