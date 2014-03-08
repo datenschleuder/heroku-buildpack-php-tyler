@@ -37,7 +37,7 @@ http {
     listen            <%= ENV['PORT'] %>;
     server_name       _;
     
-      root              /home/vcap/app/apache/;
+      root              /home/vcap/app/www/;
   index             index.php index.html index.htm;
 
     # Some basic cache-control for static files to be sent to the browser
