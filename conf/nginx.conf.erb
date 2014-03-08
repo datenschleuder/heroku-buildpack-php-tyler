@@ -67,8 +67,12 @@ http {
       access_log      off;
     }
 
+# Rewrite rule adapted for Zend Framework
 location / {
-    rewrite ^/(.*)$ /index.php/$1;
+    index index.php;
+    if (!-f $request_filename) {
+        rewrite ^(.*)$ /index.php last;
+    }
 }
 
     include /app/conf/nginx.d/*.conf;
