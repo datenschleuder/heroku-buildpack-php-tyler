@@ -47,6 +47,8 @@ echo "+ Configuring PHP..."
 --enable-mbregex \
 --enable-mbstring \
 --enable-pcntl \
+--enable-bcmath \
+--enable-ftp \
 --enable-soap=shared \
 --enable-zip \
 --with-bz2 \
