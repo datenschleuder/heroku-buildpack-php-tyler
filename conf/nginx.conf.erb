@@ -79,5 +79,10 @@ http {
       fastcgi_pass    php_fpm;
       fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
     }
+    
+    
+    location / {
+    rewrite ^/(.*)$ /index.php/$1;
+}
   }
 }
