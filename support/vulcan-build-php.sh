@@ -48,6 +48,7 @@ echo "+ Configuring PHP..."
 --enable-mbstring \
 --enable-pcntl \
 --enable-bcmath \
+--enable-opcache \
 --enable-ftp \
 --enable-soap=shared \
 --enable-zip \
@@ -82,16 +83,16 @@ export PATH=/app/vendor/php/bin:$PATH
 # configure pear
 pear config-set php_dir /app/vendor/php
 
-echo "+ Installing APC..."
+#echo "+ Installing APC..."
 # install apc from source
-curl -L http://pecl.php.net/get/APC-${APC_VERSION}.tgz -o - | tar xz
-pushd APC-${APC_VERSION}
+#curl -L http://pecl.php.net/get/APC-${APC_VERSION}.tgz -o - | tar xz
+#pushd APC-${APC_VERSION}
 # php apc jokers didn't update the version string in 3.1.10.
-sed -i 's/PHP_APC_VERSION "3.1.9"/PHP_APC_VERSION "3.1.10"/g' php_apc.h
-phpize
-./configure --enable-apc --enable-apc-filehits --with-php-config=/app/vendor/php/bin/php-config
-make && make install
-popd
+#sed -i 's/PHP_APC_VERSION "3.1.9"/PHP_APC_VERSION "3.1.10"/g' php_apc.h
+#phpize
+#./configure --enable-apc --enable-apc-filehits --with-php-config=/app/vendor/php/bin/php-config
+#make && make install
+#popd
 
 echo "+ Installing memcache..."
 # install memcache
