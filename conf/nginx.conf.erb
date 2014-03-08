@@ -86,15 +86,16 @@ http {
                 try_files $uri $uri/ /index.php$is_args$args;
         }
  
-      location ~ \.php$ {
-          # for use with php-fpm
-          fastcgi_pass   unix:/var/run/php5-fpm.sock;
-          fastcgi_param  APPLICATION_ENV  development;
-          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-          include fastcgi_params;
-          include conf.d/php.conf;
-      }
-    
+      include /app/conf/nginx.d/*.conf;
+
+    location ~ .*\.php$ {
+      try_files $uri =404;
+      limit_conn phplimit 5; # limit to 5 concurrent users to PHP per IP.
+      include         fastcgi_params;
+      fastcgi_param   HTTPS $my_https if_not_empty;
+      fastcgi_pass    php_fpm;
+      fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
 
   }
 }
