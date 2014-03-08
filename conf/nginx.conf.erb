@@ -37,7 +37,7 @@ http {
     listen            <%= ENV['PORT'] %>;
     server_name       _;
     
-      root              /app;
+      root              /app/public/;
   index             index.php index.html index.htm;
 
     # Some basic cache-control for static files to be sent to the browser
@@ -67,11 +67,6 @@ http {
       access_log      off;
     }
 
-
-location = /index.php {
-allow           all;
-  root /app/public;
-}
 
 
     include /app/conf/nginx.d/*.conf;
