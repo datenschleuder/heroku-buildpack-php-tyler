@@ -11,8 +11,7 @@ http {
   default_type        application/octet-stream;
   sendfile            on;
   server_tokens       off;
-  keepalive_timeout   65;
-  gzip                on;
+  keepalive_timeout   15;
   access_log          off;
   error_log           logs/error.log;
   proxy_max_temp_file_size	0;
@@ -21,12 +20,15 @@ http {
   # don't use server listen port in redirects.
   port_in_redirect off;
 
-gzip_vary on;
-gzip_proxied any;
-gzip_comp_level 6;
-gzip_buffers 16 8k;
-gzip_http_version 1.1;
-gzip_types text/plain text/css text/html application/json application/javascript application/xmlapplication/x-javascript text/javascript text/xml application/xml application/rss+xml application/atom+xml application/rdf+xml ;
+
+  # compress content
+  gzip  on;
+  gzip_vary on;
+  gzip_proxied any;
+  gzip_comp_level 6;
+  gzip_buffers 16 8k;
+  gzip_http_version 1.1;
+  gzip_types text/plain text/css text/html application/json application/javascript application/xmlapplication/x-javascript text/javascript text/xml application/xml application/rss+xml application/atom+xml application/rdf+xml ;
 
 
   # set $https only when SSL is actually used.
@@ -45,9 +47,9 @@ gzip_types text/plain text/css text/html application/json application/javascript
     listen            <%= ENV['PORT'] %>;
     server_name       _;
     
-      root              /app/public/;
-  index             index.php index.html index.htm;
-  charset         utf-8;
+    root              /app/public/;
+    index             index.php index.html index.htm;
+    charset         utf-8;
 
     # Some basic cache-control for static files to be sent to the browser
     location ~* \.(?:ico|css|js|gif|jpeg|jpg|png)$ {
@@ -76,13 +78,13 @@ gzip_types text/plain text/css text/html application/json application/javascript
       access_log      off;
     }
 
-# Rewrite rule adapted for Zend Framework
-location / {
-    allow           all;
-    if (!-f $request_filename) {
-        rewrite ^(.*)$ /index.php last;
+    # Rewrite rule adapted for Zend Framework
+    location / {
+        allow           all;
+        if (!-f $request_filename) {
+            rewrite ^(.*)$ /index.php last;
+        }
     }
-}
 
     include /app/conf/nginx.d/*.conf;
 
