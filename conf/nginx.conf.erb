@@ -21,6 +21,14 @@ http {
   # don't use server listen port in redirects.
   port_in_redirect off;
 
+gzip_vary on;
+gzip_proxied any;
+gzip_comp_level 6;
+gzip_buffers 16 8k;
+gzip_http_version 1.1;
+gzip_types text/plain text/css text/html application/json application/javascript
+
+
   # set $https only when SSL is actually used.
   map $http_x_forwarded_proto $my_https {
     default off;
