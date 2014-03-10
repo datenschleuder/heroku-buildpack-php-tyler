@@ -16,7 +16,7 @@ http {
   error_log           logs/error.log;
   proxy_max_temp_file_size	0;
   #fastcgi_max_temp_file_size	0;
-  limit_conn_zone $binary_remote_addr zone=phplimit:500m; # define a limit bucket for PHP-FPM
+  limit_conn_zone $binary_remote_addr zone=phplimit:50m; # define a limit bucket for PHP-FPM
   # don't use server listen port in redirects.
   port_in_redirect off;
 
