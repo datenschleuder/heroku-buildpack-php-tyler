@@ -16,7 +16,7 @@ http {
   error_log           logs/error.log;
   proxy_max_temp_file_size	0;
   #fastcgi_max_temp_file_size	0;
-  limit_conn_zone $binary_remote_addr zone=phplimit:50m; # define a limit bucket for PHP-FPM
+  limit_conn_zone $binary_remote_addr zone=phplimit:500m; # define a limit bucket for PHP-FPM
   # don't use server listen port in redirects.
   port_in_redirect off;
 
@@ -49,7 +49,7 @@ http {
     
     root              /app/public/;
     index             index.php index.html index.htm;
-    charset         utf-8;
+    charset           utf-8;
 
     # Some basic cache-control for static files to be sent to the browser
     location ~* \.(?:ico|css|js|gif|jpeg|jpg|png)$ {
@@ -90,7 +90,7 @@ http {
 
     location ~ .*\.php$ {
       try_files $uri =404;
-      limit_conn phplimit 5; # limit to 5 concurrent users to PHP per IP.
+      limit_conn phplimit 50; # limit to 5 concurrent users to PHP per IP.
       include         fastcgi_params;
       fastcgi_param   HTTPS $my_https if_not_empty;
       fastcgi_pass    php_fpm;
