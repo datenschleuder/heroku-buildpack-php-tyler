@@ -11,12 +11,12 @@ http {
   default_type        application/octet-stream;
   sendfile            on;
   server_tokens       off;
-  keepalive_timeout   60;
+  keepalive_timeout   10;
   access_log          off;
   error_log           logs/error.log;
   proxy_max_temp_file_size	0;
   #fastcgi_max_temp_file_size	0;
-  limit_conn_zone $binary_remote_addr zone=phplimit:80m; # define a limit bucket for PHP-FPM
+  limit_conn_zone $binary_remote_addr zone=phplimit:200m; # define a limit bucket for PHP-FPM
   # don't use server listen port in redirects.
   port_in_redirect off;
 
@@ -90,7 +90,7 @@ http {
 
     location ~ .*\.php$ {
       try_files $uri =404;
-      limit_conn phplimit 80; # limit to 5 concurrent users to PHP per IP.
+      limit_conn phplimit 100; # limit to 100 concurrent users to PHP per IP.
       include         fastcgi_params;
       fastcgi_param   HTTPS $my_https if_not_empty;
       fastcgi_pass    php_fpm;
