@@ -28,6 +28,8 @@ tcp_nopush on;
 tcp_nodelay on;
 reset_timedout_connection on;
 keepalive_requests 1000;
+client_body_timeout 10;
+send_timeout 2;
 
   # compress content
   gzip  on;
