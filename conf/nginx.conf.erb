@@ -4,7 +4,7 @@ worker_rlimit_nofile 100000;
 daemon off;
 
 
-fastcgi_cache_path /tmp/nginx/cache levels=1:2 keys_zone=phplimit:100m inactive=60m;
+fastcgi_cache_path /tmp/nginx/cache levels=1:2 keys_zone=myapp:100m inactive=60m;
 fastcgi_cache_key "$scheme$request_method$host$request_uri";
 
 
@@ -124,7 +124,8 @@ open_file_cache_errors on;
       fastcgi_pass    php_fpm;
       fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
       
-
+fastcgi_cache myapp;
+        fastcgi_cache_valid 200 60m;
     }
     
     
