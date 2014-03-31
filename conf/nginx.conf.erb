@@ -105,11 +105,11 @@ open_file_cache_errors on;
     include /app/conf/nginx.d/*.conf;
     
     
-    fastcgi_cache_path /tmp/cache/nginx levels=1:2 keys_zone=microcache:10m max_size=1000m inactive=60m;
+  
     
 
     location ~ .*\.php$ {
-    
+      fastcgi_cache_path /tmp/cache/nginx levels=1:2 keys_zone=microcache:10m max_size=1000m inactive=60m;
     
      ##
     # Fastcgi cache
