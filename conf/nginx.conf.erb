@@ -66,6 +66,8 @@ open_file_cache_errors on;
     root              /app/public/;
     index             index.php index.html index.htm;
     charset           utf-8;
+    
+    set $cache_uri $request_uri;
 
     # Some basic cache-control for static files to be sent to the browser
     location ~* \.(?:ico|css|js|gif|jpeg|jpg|png)$ {
