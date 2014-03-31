@@ -4,7 +4,7 @@ worker_rlimit_nofile 100000;
 daemon off;
 
 events {
-  worker_connections  2048;
+  worker_connections  1024;
   use epoll;
   multi_accept on;
   
@@ -33,7 +33,7 @@ send_timeout 2;
 
 
 # Caches information about open FDs, freqently accessed files.
-open_file_cache max=100000 inactive=20s; 
+open_file_cache max=10000 inactive=20s; 
 open_file_cache_valid 30s; 
 open_file_cache_min_uses 2;
 open_file_cache_errors on;
