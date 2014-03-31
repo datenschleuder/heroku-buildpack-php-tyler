@@ -103,8 +103,32 @@ open_file_cache_errors on;
     }
 
     include /app/conf/nginx.d/*.conf;
+    
+    
+    fastcgi_cache_path /tmp/cache/nginx levels=1:2 keys_zone=microcache:10m max_size=1000m inactive=60m;
+    
 
     location ~ .*\.php$ {
+    
+    
+     ##
+    # Fastcgi cache
+    ##
+    set $skip_cache 1;
+    if ($cache_uri != "null cache") {
+      add_header X-Cache-Debug "$cache_uri $cookie_nocache $arg_nocache$arg_comment $http_pragma $http_authorization";
+      set $skip_cache 0;
+    }
+    fastcgi_cache_bypass $skip_cache;
+    fastcgi_cache microcache;
+    fastcgi_cache_key $scheme$host$request_uri$request_method;
+    fastcgi_cache_valid any 8m;
+    fastcgi_cache_use_stale updating;
+    fastcgi_cache_bypass $http_pragma;
+    fastcgi_cache_use_stale updating error timeout invalid_header http_500;
+    
+    
+    
       try_files $uri =404;
       limit_conn phplimit 200; # limit to 200 concurrent users to PHP per IP.
       include         fastcgi_params;
@@ -112,13 +136,7 @@ open_file_cache_errors on;
       fastcgi_pass    php_fpm;
       fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
       
-      fastcgi_cache_bypass $skip_cache;
-    fastcgi_cache microcache;
-    fastcgi_cache_key $scheme$host$request_uri$request_method;
-    fastcgi_cache_valid any 8m;
-    fastcgi_cache_use_stale updating;
-    fastcgi_cache_bypass $http_pragma;
-    fastcgi_cache_use_stale updating error timeout invalid_header http_500;
+
     }
     
     
