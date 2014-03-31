@@ -65,8 +65,6 @@ send_timeout 2;
     index             index.php index.html index.htm;
     charset           utf-8;
     
-    fastcgi_cache_path /app/cache levels=1:2 keys_zone=myapp:50m inactive=30m;
-fastcgi_cache_key "$scheme$request_method$host$request_uri";
 
     # Some basic cache-control for static files to be sent to the browser
     location ~* \.(?:ico|css|js|gif|jpeg|jpg|png)$ {
@@ -118,8 +116,6 @@ fastcgi_cache_key "$scheme$request_method$host$request_uri";
       fastcgi_pass    php_fpm;
       fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
       
-fastcgi_cache myapp;
-        fastcgi_cache_valid 200 60m;
     }
     
     
