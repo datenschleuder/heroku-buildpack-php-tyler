@@ -4,7 +4,7 @@ worker_rlimit_nofile 100000;
 daemon off;
 
 
-fastcgi_cache_path /tmp/nginx/cache levels=1:2 keys_zone=myapp:100m inactive=60m;
+fastcgi_cache_path /app/nginx/cache levels=1:2 keys_zone=myapp:100m inactive=60m;
 fastcgi_cache_key "$scheme$request_method$host$request_uri";
 
 
@@ -35,12 +35,6 @@ reset_timedout_connection on;
 keepalive_requests 1000;
 client_body_timeout 10;
 send_timeout 2;
-
-# Caches information about open FDs, freqently accessed files.
-open_file_cache max=200000 inactive=20s; 
-open_file_cache_valid 30s; 
-open_file_cache_min_uses 2;
-open_file_cache_errors on;
 
   # compress content
   gzip  on;
