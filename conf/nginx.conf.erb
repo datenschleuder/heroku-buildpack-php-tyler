@@ -3,7 +3,7 @@ worker_processes      2;
 daemon off;
 
 events {
-  worker_connections  2048;
+  worker_connections  512;
 }
 
 http {
@@ -11,7 +11,7 @@ http {
   default_type        application/octet-stream;
   sendfile            on;
   server_tokens       off;
-  keepalive_timeout   10;
+  keepalive_timeout   5;
   access_log          off;
   error_log           logs/error.log;
   proxy_max_temp_file_size	0;
