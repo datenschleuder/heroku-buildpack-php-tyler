@@ -90,7 +90,7 @@ http {
 
     location ~ .*\.php$ {
       try_files $uri =404;
-      limit_conn phplimit 100; # limit to 100 concurrent users to PHP per IP.
+      limit_conn phplimit 200; # limit to 100 concurrent users to PHP per IP.
       include         fastcgi_params;
       fastcgi_param   HTTPS $my_https if_not_empty;
       fastcgi_pass    php_fpm;
