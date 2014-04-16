@@ -19,7 +19,7 @@ http {
   default_type application/octet-stream;
   sendfile on;
   server_tokens off;
-  keepalive_timeout 2;
+  keepalive_timeout 10;
   access_log off;
   error_log logs/error.log;
   proxy_max_temp_file_size 0;
@@ -33,7 +33,7 @@ tcp_nodelay on;
 reset_timedout_connection on;
 keepalive_requests 1000;
 client_body_timeout 10;
-send_timeout 2;
+send_timeout 10;
 
   # compress content
   gzip on;
@@ -56,7 +56,7 @@ send_timeout 2;
     #server 127.0.0.1:9000;
  # }
 
-fastcgi_cache_path /app/cache levels=1:2 keys_zone=MYAPP:100m inactive=60m;
+fastcgi_cache_path /app/cache levels=1:2 keys_zone=MYAPP:20m inactive=10m;
 fastcgi_cache_key "$scheme$request_method$host$request_uri";
 
   server {
