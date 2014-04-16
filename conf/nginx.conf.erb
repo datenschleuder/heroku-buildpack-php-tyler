@@ -24,7 +24,7 @@ http {
   error_log           logs/error.log;
   proxy_max_temp_file_size	0;
   #fastcgi_max_temp_file_size	0;
-  limit_conn_zone $binary_remote_addr zone=phplimit:1000m; # define a limit bucket for PHP-FPM
+  limit_conn_zone $binary_remote_addr zone=phplimit:200m; # define a limit bucket for PHP-FPM
   # don't use server listen port in redirects.
   port_in_redirect off;
   
@@ -112,7 +112,7 @@ fastcgi_cache_key "$scheme$request_method$host$request_uri";
     location ~ .*\.php$ {
     
       try_files $uri =404;
-      limit_conn phplimit 100; # limit to 100 concurrent users to PHP per IP.
+      limit_conn phplimit 300; # limit to 100 concurrent users to PHP per IP.
       include         fastcgi_params;
       
       
@@ -126,7 +126,7 @@ fastcgi_cache_key "$scheme$request_method$host$request_uri";
       fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
       
       fastcgi_cache MYAPP;
-        fastcgi_cache_valid 200 60m;
+        fastcgi_cache_valid 200 20m;
       
     }
     
