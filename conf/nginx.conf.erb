@@ -111,22 +111,25 @@ fastcgi_cache_key "$scheme$request_method$host$request_uri";
 
     location ~ .*\.php$ {
     
-      try_files $uri =404;
-      limit_conn phplimit 300; # limit to 100 concurrent users to PHP per IP.
-      include fastcgi_params;
-      
+      fastcgi_cache MYAPP;
+      fastcgi_cache_valid 200 20m;
       
       fastcgi_buffer_size 128k;
       fastcgi_buffers 256 4k;
       fastcgi_busy_buffers_size 256k;
       fastcgi_temp_file_write_size 256k;
+    
+      try_files $uri =404;
+      limit_conn phplimit 300; # limit to 100 concurrent users to PHP per IP.
+      include fastcgi_params;
+      
+      
       
       fastcgi_param HTTPS $my_https if_not_empty;
       fastcgi_pass unix:/tmp/php-fpm.sock;
       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
       
-      fastcgi_cache MYAPP;
-        fastcgi_cache_valid 200 20m;
+     
       
     }
     
