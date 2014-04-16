@@ -132,13 +132,7 @@ send_timeout 10;
       fastcgi_buffers 256 4k;
       fastcgi_busy_buffers_size 256k;
       fastcgi_temp_file_write_size 256k;
-      
-      fastcgi_param   HTTPS $my_https if_not_empty;
-      fastcgi_pass    unix:/tmp/php-fpm.sock;
-      fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
-      
-      fastcgi_cache MYAPP;
-        fastcgi_cache_valid 200 20m;
+      #fastcgi_cache_valid 200 20m;
       
     }
     
