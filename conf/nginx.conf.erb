@@ -23,7 +23,6 @@ http {
   access_log          off;
   error_log           logs/error.log;
   proxy_max_temp_file_size	0;
-  #fastcgi_max_temp_file_size	0;
   limit_conn_zone $binary_remote_addr zone=phplimit:200m; # define a limit bucket for PHP-FPM
   # don't use server listen port in redirects.
   port_in_redirect off;
@@ -33,7 +32,9 @@ tcp_nodelay on;
 reset_timedout_connection on;
 keepalive_requests 1000;
 client_body_timeout 10;
-send_timeout 2;
+send_timeout 10;
+
+fastcgi_cache_path /app/cache/nginx levels=1:2 keys_zone=microcache:10m max_size=1000m inactive=60m;
 
   # compress content
   gzip  on;
@@ -51,13 +52,6 @@ send_timeout 2;
     https on;
   }
 
-  #upstream php_fpm {
-   # server unix:/tmp/php-fpm.sock;
-    #server 127.0.0.1:9000;
- # }
-
-fastcgi_cache_path /app/cache levels=1:2 keys_zone=MYAPP:100m inactive=60m;
-fastcgi_cache_key "$scheme$request_method$host$request_uri";
 
   server {
     listen            <%= ENV['PORT'] %>;
@@ -115,6 +109,24 @@ fastcgi_cache_key "$scheme$request_method$host$request_uri";
       limit_conn phplimit 300; # limit to 100 concurrent users to PHP per IP.
       include         fastcgi_params;
       
+        ##
+        # Fastcgi cache
+        ##
+        set $skip_cache 1;
+          if ($cache_uri != "null cache") {
+            add_header X-Cache-Debug "$cache_uri $cookie_nocache $arg_nocache$arg_comment $http_pragma $http_authorization";
+        set $skip_cache 0;
+        }
+        
+    fastcgi_cache_bypass $skip_cache;
+    fastcgi_cache microcache;
+    fastcgi_cache_key $scheme$host$request_uri$request_method;
+    fastcgi_cache_valid any 8m;
+    fastcgi_cache_use_stale updating;
+    fastcgi_cache_bypass $http_pragma;
+    fastcgi_cache_use_stale updating error timeout invalid_header http_500;
+    
+    
       
       fastcgi_buffer_size 128k;
       fastcgi_buffers 256 4k;
