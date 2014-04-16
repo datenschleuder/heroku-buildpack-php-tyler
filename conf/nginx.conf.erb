@@ -112,11 +112,11 @@ send_timeout 10;
         ##
         # Fastcgi cache
         ##
-        set $skip_cache 1;
-          if ($cache_uri != "null cache") {
-            add_header X-Cache-Debug "$cache_uri $cookie_nocache $arg_nocache$arg_comment $http_pragma $http_authorization";
-        set $skip_cache 0;
-        }
+        #set $skip_cache 1;
+        #  if ($cache_uri != "null cache") {
+        #    add_header X-Cache-Debug "$cache_uri $cookie_nocache $arg_nocache$arg_comment $http_pragma $http_authorization";
+        #set $skip_cache 0;
+       # }
         
     #fastcgi_cache_bypass $skip_cache;
     #fastcgi_cache microcache;
