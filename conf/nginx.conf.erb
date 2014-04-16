@@ -112,7 +112,7 @@ fastcgi_cache_key "$scheme$request_method$host$request_uri";
     location ~ .*\.php$ {
     
       try_files $uri =404;
-      limit_conn phplimit 200; # limit to 200 concurrent users to PHP per IP.
+      limit_conn phplimit 300; # limit to 300 concurrent users to PHP per IP.
       include         fastcgi_params;
       
       
