@@ -127,7 +127,7 @@ send_timeout 10;
     #fastcgi_cache_use_stale updating error timeout invalid_header http_500;
     
     fastcgi_param HTTPS $my_https if_not_empty;
-      fastcgi_pass /tmp/php5-fpm.sock;
+      fastcgi_pass /tmp/php-fpm.sock;
       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
       
       fastcgi_buffer_size 128k;
