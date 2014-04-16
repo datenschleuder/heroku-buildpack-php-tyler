@@ -52,7 +52,8 @@ send_timeout 2;
   }
 
   upstream php_fpm {
-    server unix:/tmp/php-fpm.socket;
+    #server unix:/tmp/php-fpm.socket;
+    server 127.0.0.1:9000;
   }
 
 fastcgi_cache_path /app/cache levels=1:2 keys_zone=MYAPP:100m inactive=60m;
