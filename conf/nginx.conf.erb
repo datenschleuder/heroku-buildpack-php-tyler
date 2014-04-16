@@ -1,5 +1,5 @@
 # setting worker_processes to CPU core count
-worker_processes      2;
+worker_processes      10;
 worker_rlimit_nofile 1000;
 daemon off;
 
@@ -126,7 +126,9 @@ send_timeout 10;
     #fastcgi_cache_bypass $http_pragma;
     #fastcgi_cache_use_stale updating error timeout invalid_header http_500;
     
-    
+    fastcgi_param HTTPS $my_https if_not_empty;
+      fastcgi_pass /tmp/php5-fpm.sock;
+      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
       
       fastcgi_buffer_size 128k;
       fastcgi_buffers 256 4k;
